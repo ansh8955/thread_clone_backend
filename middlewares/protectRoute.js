@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 
 const protectRoute = async (req, res, next) => {
   try {
+	console.log(req.headers.authorization+" "+"Aniket");
+	
     const token = req.cookies.jwt || req.headers.authorization?.split(" ")[1];
 
     if (!token) {
