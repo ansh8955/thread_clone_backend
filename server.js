@@ -27,7 +27,7 @@ console.log(process.env.CLOUDINARY_CLOUD_NAME);
 // Middlewares
 app.use(
   cors({
-    origin: "https://thread-clone-sr1c.vercel.app", 
+    origin: "https://thread-frontend-inky.vercel.app/auth", 
     credentials: true, 
   })
 );
