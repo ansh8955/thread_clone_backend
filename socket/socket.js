@@ -8,7 +8,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://thread-frontend-inky.vercel.app", // Ensure this matches the frontend URL
+    origin: "https://thread-clone-frontend-ruby.vercel.app", // Ensure this matches the frontend URL
     methods: ["GET", "POST"],
   },
 });
