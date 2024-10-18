@@ -1,14 +1,15 @@
 import User from "../models/userModel.js";
 import jwt from "jsonwebtoken";
+import Cookies from 'js-cookie';
 
 const protectRoute = async (req, res, next) => {
   try {
-    const token = req.cookies.jwt || req.headers.authorization?.split(" ")[1];
+    // const token = req.cookies.jwt || req.headers.authorization?.split(" ")[1];
+	const token=Cookies.get("jwt");
 
     if (!token) {
       return res.status(401).json({ message: "Unauthorized, token missing" });
-    }
-
+    
     jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
       if (err) {
         if (err.name === "TokenExpiredError") {
