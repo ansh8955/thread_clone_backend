@@ -52,8 +52,8 @@ const signupUser = async (req, res) => {
 		await newUser.save();
 
 		if (newUser) {
-			generateTokenAndSetCookie(newUser._id, res);
-
+			const token=generateTokenAndSetCookie(newUser._id, res);
+			localStorage.setItem("jwt",token);
 			res.status(201).json({
 				_id: newUser._id,
 				name: newUser.name,
@@ -85,6 +85,7 @@ const loginUser = async (req, res) => {
 		}
 
 		const token=generateTokenAndSetCookie(user._id, res);
+		localStorage.setItem("jwt",token);
 
 		res.status(200).json({
 			_id: user._id,
