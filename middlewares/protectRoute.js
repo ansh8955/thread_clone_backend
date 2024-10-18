@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 const protectRoute = async (req, res, next) => {
   try {
 	console.log(req.headers['authorization']+" "+"Aniket");
-	console.log(req.headers+" "+"Abhishek");
+	console.log(req.headers.token+" "+"Abhishek");
 	
     const token =  req.headers.authorization?.split(" ")[1];
 
