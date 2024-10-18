@@ -2,22 +2,35 @@ import User from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 
 const protectRoute = async (req, res, next) => {
-	try {
-		const token = req.cookies.jwt;
+  try {
+    const token = req.cookies.jwt || req.headers.authorization?.split(" ")[1];
 
-		if (!token) return res.status(401).json({ message: "Unauthorized in protect" });
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized, token missing" });
+    }
 
-		const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+      if (err) {
+        if (err.name === "TokenExpiredError") {
+          return res.status(401).json({ message: "Token expired" });
+        } else {
+          return res.status(401).json({ message: "Unauthorized, invalid token" });
+        }
+      }
 
-		const user = await User.findById(decoded.userId).select("-password");
+      const user = await User.findById(decoded.userId).select("-password");
 
-		req.user = user;
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
 
-		next();
-	} catch (err) {
-		res.status(500).json({ message: err.message });
-		console.log("Error in signupUser: ", err.message);
-	}
+      req.user = user;
+      next();
+    });
+  } catch (err) {
+    console.log("Error in protectRoute: ", err.message);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
 export default protectRoute;
