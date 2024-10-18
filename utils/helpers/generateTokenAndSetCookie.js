@@ -4,7 +4,7 @@ const generateTokenAndSetCookie = (userId, res) => {
 	const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
 		expiresIn: "15d",
 	});
-console.log(token+"Aniket");
+
 
 
 	res.cookie("jwt", token, {

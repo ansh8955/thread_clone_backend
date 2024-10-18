@@ -84,7 +84,7 @@ const loginUser = async (req, res) => {
 			await user.save();
 		}
 
-		generateTokenAndSetCookie(user._id, res);
+		const token=generateTokenAndSetCookie(user._id, res);
 
 		res.status(200).json({
 			_id: user._id,
@@ -93,6 +93,7 @@ const loginUser = async (req, res) => {
 			username: user.username,
 			bio: user.bio,
 			profilePic: user.profilePic,
+			Token:token,
 		});
 	} catch (error) {
 		res.status(500).json({ error: error.message });
