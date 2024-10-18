@@ -6,12 +6,12 @@ const generateTokenAndSetCookie = (userId, res) => {
 	});
 
 
-    // localStorage.setItem("jwt",token);
 	// res.cookie("jwt", token, {
 	// 	httpOnly: true, // more secure
 	// 	maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days
 	// 	sameSite: "strict", // CSRF
 	// });
+	res.setHeader('Authorization', `Bearer ${token}`);
 
 	return token;
 };
