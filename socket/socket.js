@@ -42,7 +42,7 @@ io.on("connection", (socket) => {
         io.to(userSocketMap[userId]).emit("messagesSeen", { conversationId });
       }
     } catch (error) {
-      console.log("Error updating message seen status:", error);
+      console.log("Error updating message seen status:", error); // This is 
     }
   });
 
